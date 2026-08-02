@@ -13,9 +13,13 @@ ENV CGO_ENABLED=0
 WORKDIR /src
 COPY . .
 
+# Mattermost Calls rejects a non-SemVer RTCD /version response during plugin
+# activation. Release images must embed the signed release tag, never a
+# branch-and-SHA build label.
 RUN test -n "$RTCD_SOURCE_COMMIT" && \
     printf '%s\n' "$RTCD_SOURCE_COMMIT" | grep -Eq '^[0-9a-f]{40}$' && \
     test -n "$RTCD_BUILD_VERSION" && \
+    printf '%s\n' "$RTCD_BUILD_VERSION" | grep -Eq '^v?[0-9]+\.[0-9]+\.[0-9]+([.-][0-9A-Za-z.-]+)?(\+[0-9A-Za-z.-]+)?$' && \
     test -n "$RTCD_BUILD_DATE" && \
     go mod verify && \
     go test -mod=readonly -run '^$' ./... && \
