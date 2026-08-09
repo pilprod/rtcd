@@ -8,7 +8,7 @@ Mattermost server.
 2. The identical reviewed commit is promoted to `release-1.2-patched` for the
    dev-only preview pipeline. No production target is reachable from this
    branch.
-3. A signed immutable `v1.2.6-yourown.N` tag is the only input eligible for a
+3. A signed immutable patched-fork tag such as `v1.2.6-patched` is the only input eligible for a
    dev-to-production release. The deployment repository pins the full RTCD
    commit, builds it in Cloud Build, records SBOM/provenance, and deploys its
    immutable digest.
