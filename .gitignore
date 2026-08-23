@@ -1,4 +1,6 @@
 # Binaries
+.engineering-private/
+
 dist/
 
 # Editors/IDEs
